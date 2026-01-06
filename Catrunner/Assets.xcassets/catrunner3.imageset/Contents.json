@@ -1,0 +1,13 @@
+{
+    "images":  [
+                   {
+                       "filename":  "catrunner3.png",
+                       "scale":  "1x",
+                       "idiom":  "universal"
+                   }
+               ],
+    "info":  {
+                 "author":  "xcode",
+                 "version":  1
+             }
+}
