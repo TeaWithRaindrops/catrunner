@@ -3,6 +3,7 @@ import SpriteKit
 final class MenuScene: SKScene {
     private let titleLabel = SKLabelNode(fontNamed: "Avenir-Heavy")
     private let startLabel = SKLabelNode(fontNamed: "Avenir-Heavy")
+    private let logoNode = SKSpriteNode(imageNamed: "catrunner_logo")
 
     override func didMove(to view: SKView) {
         backgroundColor = SKColor(red: 0.94, green: 0.86, blue: 0.70, alpha: 1.0)
@@ -14,6 +15,9 @@ final class MenuScene: SKScene {
         titleLabel.zPosition = 1
         addChild(titleLabel)
 
+        logoNode.zPosition = 1
+        addChild(logoNode)
+
         startLabel.text = "НАЧАТЬ ИГРУ"
         startLabel.fontSize = min(size.width, size.height) * 0.06
         startLabel.fontColor = SKColor(red: 0.30, green: 0.26, blue: 0.18, alpha: 1.0)
@@ -21,6 +25,8 @@ final class MenuScene: SKScene {
         startLabel.name = "start"
         startLabel.zPosition = 1
         addChild(startLabel)
+
+        updateLayout()
 
         let pulseUp = SKAction.scale(to: 1.05, duration: 0.6)
         pulseUp.timingMode = .easeInEaseOut
@@ -31,10 +37,7 @@ final class MenuScene: SKScene {
 
     override func didChangeSize(_ oldSize: CGSize) {
         super.didChangeSize(oldSize)
-        titleLabel.fontSize = min(size.width, size.height) * 0.12
-        titleLabel.position = CGPoint(x: size.width * 0.5, y: size.height * 0.62)
-        startLabel.fontSize = min(size.width, size.height) * 0.06
-        startLabel.position = CGPoint(x: size.width * 0.5, y: size.height * 0.38)
+        updateLayout()
     }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -46,5 +49,21 @@ final class MenuScene: SKScene {
             nextScene.scaleMode = scaleMode
             view?.presentScene(nextScene, transition: SKTransition.fade(withDuration: 0.25))
         }
+    }
+
+    private func updateLayout() {
+        let minSide = min(size.width, size.height)
+        titleLabel.fontSize = minSide * 0.12
+        titleLabel.position = CGPoint(x: size.width * 0.5, y: size.height * 0.70)
+
+        if let texture = logoNode.texture {
+            let targetWidth = size.width * 0.55
+            let scale = targetWidth / max(texture.size().width, 1)
+            logoNode.setScale(scale)
+        }
+        logoNode.position = CGPoint(x: size.width * 0.5, y: size.height * 0.54)
+
+        startLabel.fontSize = minSide * 0.06
+        startLabel.position = CGPoint(x: size.width * 0.5, y: size.height * 0.30)
     }
 }
